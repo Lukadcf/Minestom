@@ -14,8 +14,14 @@ public class PlayerHeldListener {
             return;
         }
 
+        if (player.getItemUseHand() == PlayerHand.MAIN) {
+            //Player was using an item in their main hand, reset progress
+            player.refreshActiveHand(false, false, false);
+            player.clearItemUse();
+        }
+        
         final byte slot = (byte) packet.slot();
-
+        
         PlayerChangeHeldSlotEvent changeHeldSlotEvent = new PlayerChangeHeldSlotEvent(player, slot);
         EventDispatcher.call(changeHeldSlotEvent);
 
